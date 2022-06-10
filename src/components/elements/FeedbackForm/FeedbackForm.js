@@ -1,25 +1,38 @@
 import { useState } from "react";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import styles from "./FeedbackForm.module.css";
+
 function FeedbackForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
+  const notify = () =>
+    toast.success("Logged in Console", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      pauseOnHover: false,
+    });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Name", name);
     console.log("Email:", email);
+    notify();
     setName("");
     setEmail("");
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">First Name</label>
+    <div className={styles.container}>
+      <h1 className={styles.headline}>Feedback Form</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="text"
-          id="name"
-          name="name"
+          placeholder="Name"
           value={name}
           required
           onChange={(e) => {
@@ -27,11 +40,9 @@ function FeedbackForm() {
           }}
         />
 
-        <label htmlFor="email">Last Name</label>
         <input
           type="email"
-          id="email"
-          name="email"
+          placeholder="Email"
           value={email}
           required
           onChange={(e) => {
@@ -41,6 +52,9 @@ function FeedbackForm() {
 
         <button type="submit">Submit</button>
       </form>
+
+      {/* Rendering the Toast */}
+      <ToastContainer />
     </div>
   );
 }
